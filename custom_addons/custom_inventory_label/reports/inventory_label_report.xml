@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <!-- Define the report -->
+        <report
+            id="inventory_label_report"
+            model="stock.picking"
+            string="Inventory Label"
+            report_type="qweb-pdf"
+            name="custom_inventory_label.inventory_label_report"
+            file="custom_inventory_label.inventory_label_report"
+            />
+
+        <!-- Define the QWeb template for the report -->
+        <template id="inventory_label_report">
+            <t t-call="web.basic_layout">
+                <t t-foreach="doc_ids" t-as="picking_id">
+                    <t t-set="picking" t-value="env['stock.picking'].browse(picking_id)"/>
+                    <div class="page">
+                        <h2>Inventory Label</h2>
+                        <p><strong>Product Name:</strong> <t t-esc="picking.label_product_name"/></p>
+                        <p><strong>Product ID:</strong> <t t-esc="picking.label_product_id.name"/></p>
+                        <p><strong>Material Name:</strong> <t t-esc="picking.label_material_name"/></p>
+                        <p><strong>Material ID:</strong> <t t-esc="picking.label_material_id.name"/></p>
+                        <p><strong>Lot Number:</strong> <t t-esc="picking.label_lot_number"/></p>
+                        <p><strong>Date of Printing:</strong> <t t-esc="picking.label_date_printing"/></p>
+                        <p><strong>Expiration Date:</strong> <t t-esc="picking.label_expiration_date"/></p>
+                        <p><strong>Expected Weight:</strong> <t t-esc="picking.label_expected_weight"/></p>
+                        <p><strong>Actual Weight:</strong> <t t-esc="picking.label_actual_weight"/></p>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
