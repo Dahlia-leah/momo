@@ -1,1 +1,3 @@
-from . import stock_picking_inherit
+# models/__init__.py
+from . import stock_move
+from . import stock_picking
