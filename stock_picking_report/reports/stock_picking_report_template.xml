@@ -1,0 +1,80 @@
+<odoo>
+    <!-- Report Template Definition -->
+    <template id="report_stock_picking_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="header">
+                    <h2 class="text-center">Stock Picking Report</h2>
+                </div>
+                <div class="page">
+                    <div class="two-columns">
+                        <!-- Product Name -->
+                        <div class="column">
+                            <h2>Product Name: <t t-esc="doc.product_id.name"/></h2>
+                        </div>
+                        <!-- Actual Weight from the API -->
+                        <div class="column">
+                            <div class="column">
+                             <h2>Actual Weight:
+                                 <t t-esc="doc.external_weight" t-if="doc.external_weight"/>
+                                 <t t-esc="doc.external_unit" t-if="doc.external_unit"/>
+
+                             </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Information Section -->
+                    <div class="additional-info">
+                        <div class="row">
+                            <h3>Picking Date: <t t-esc="doc.scheduled_date"/></h3>
+                        </div>
+                        <div class="row">
+                            <h3>Partner: <t t-esc="doc.partner_id.name"/></h3>
+                        </div>
+                        <div class="row">
+                            <h3>Location: <t t-esc="doc.location_id.display_name"/></h3>
+                        </div>
+                    </div>
+
+                    <!-- Custom Styles -->
+                    <style>
+                        .two-columns {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-top: 20px;
+                        }
+                        .column {
+                            flex: 1;
+                            padding: 10px;
+                            margin-right: 10px;
+                            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+                        }
+                        .column:last-child {
+                            margin-right: 0;
+                        }
+                        .header {
+                            margin-bottom: 20px;
+                            text-align: center;
+                        }
+                        h2, h3 {
+                            margin: 0 0 10px 0;
+                        }
+                        .additional-info .row {
+                            margin: 10px 0;
+                        }
+                    </style>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- Report Action Definition -->
+    <record id="action_report_stock_picking" model="ir.actions.report">
+        <field name="name">Stock Picking Report</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock_picking_report.report_stock_picking_template</field>
+        <field name="report_file">stock_picking_report.report_stock_picking_template</field>
+    </record>
+</odoo>
